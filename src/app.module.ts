@@ -3,12 +3,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { ProductModule } from './product/product.module';
 import { MongooseModule } from '@nestjs/mongoose';
+import { ConfigModule } from '@nestjs/config';
 
 @Module({
   imports: [
+    ConfigModule.forRoot(),
     ProductModule,
     MongooseModule.forRoot(
-      'mongodb://admin:admin123@192.168.1.8:27018/nestjs?authSource=admin',
+      process.env.MONGODB_CONNECTION_URL as string,
     ),
   ],
   controllers: [AppController],
